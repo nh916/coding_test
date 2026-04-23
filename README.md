@@ -48,7 +48,7 @@ ANTHROPIC_API_KEY=your_api_key_here
 ## Installation
 
 1. clone project
-2. `cd pdfchat-cli`
+2. `cd pdf_chat_cli`
 3. `pip install poetry`
 4. `poetry install`
 
