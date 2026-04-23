@@ -19,49 +19,59 @@ class Message(TypedDict):
     content: str
 
 
-client: Anthropic = Anthropic(api_key="YOUR_KEY")
-
-
-def load_pdf(path: str) -> str:
-    doc: fitz.Document = fitz.open(path)
-    text: str = "\n".join(page.get_text() for page in doc)
-    return text
-
-
-pdf_text: str = load_pdf("file.pdf")
-
-messages: List[Message] = [
-    {
-        "role": "user",
-        "content": f"Here is a document:\n\n{pdf_text}\n\nYou will answer questions about it.",
-    }
-]
-
-
-def ask(question: str) -> str:
-    messages.append({"role": "user", "content": question})
-
-    res = client.messages.create(
-        model="claude-3-sonnet-20240229",  # faster/cheaper than opus
-        max_tokens=500,
-        messages=messages,
-    )
-
-    answer: str = res.content[0].text  # type: ignore
-    messages.append({"role": "assistant", "content": answer})
-    return answer
-
-
-# ---------------------------------------------------------------------------------------------
-
-
-def load_pdf(pdf_path: str) -> str:
+class PDFChat:
     """
-    Load the PDF from the given path and return the contents.
+    Simple PDF chat interface using Claude
     """
-    with open(pdf_path, "rb") as pdf_file:
-        return pdf_file.read()
 
+    def __init__(self, api_key: str, model: str = "claude-3-sonnet-20240229") -> None:
+        """
+        Initialize the PDFChat client.
 
-def speak_with_ai(pdf_contents: str) -> str:
-    """ """
+        Args:
+            api_key: Anthropic API key.
+            model: Claude model to use.
+        """
+        self.client: Anthropic = Anthropic(api_key=api_key)
+        self.model: str = model
+        self.messages: List[Message] = []
+        self.pdf_text: str = ""
+
+    def load_pdf(self, path: str) -> None:
+        """
+        Load and extract text from a PDF file.
+
+        Args:
+            path: File path to the PDF.
+        """
+        doc: fitz.Document = fitz.open(path)
+        self.pdf_text = "\n".join(page.get_text() for page in doc)
+
+        self.messages = [
+            {
+                "role": "user",
+                "content": f"Here is a document:\n\n{self.pdf_text}\n\nYou will answer questions about it.",
+            }
+        ]
+
+    def ask(self, question: str) -> str:
+        """
+        Ask a question about the loaded PDF.
+
+        Args:
+            question: User question.
+
+        Returns:
+            Model-generated answer.
+        """
+        self.messages.append({"role": "user", "content": question})
+
+        res = self.client.messages.create(
+            model=self.model,
+            max_tokens=500,
+            messages=self.messages,
+        )
+
+        answer: str = res.content[0].text  # type: ignore
+        self.messages.append({"role": "assistant", "content": answer})
+        return answer
