@@ -17,7 +17,7 @@ def main() -> None:
 
     # get the API key from the environment variables `.env`
     load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent / ".env")
-    anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+    anthropic_api_key: str | None = os.getenv("ANTHROPIC_API_KEY")
 
     # exception handling for missing API key
     if anthropic_api_key is None:

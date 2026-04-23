@@ -10,7 +10,7 @@ If so, we should handle it gracefully.
 
 import fitz  # type: ignore # PyMuPDF
 from anthropic import Anthropic
-from anthropic.types import MessageParam
+from anthropic.types import Message, MessageParam
 
 
 class PDFChat:
@@ -60,12 +60,12 @@ class PDFChat:
         """
         self.messages.append({"role": "user", "content": question})
 
-        res = self.client.messages.create(
+        response: Message = self.client.messages.create(
             model=self.model,
             max_tokens=500,
             messages=self.messages,
         )
 
-        answer: str = res.content[0].text  # type: ignore
+        answer: str = response.content[0].text  # type: ignore
         self.messages.append({"role": "assistant", "content": answer})
         return answer
