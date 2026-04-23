@@ -10,7 +10,7 @@ If so, we should handle it gracefully.
 
 from typing import TypedDict
 
-import fitz  # PyMuPDF
+import fitz  # type: ignore # PyMuPDF
 from anthropic import Anthropic
 
 
