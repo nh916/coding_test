@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "dioptra coding exercise"
+name = "PDFChat CLI"
 version = "0.1.0"
 description = ""
 authors = ["nh916"]
