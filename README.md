@@ -1,4 +1,4 @@
-# PDFChat CLI
+# PDF Chat CLI
 
 A simple command-line tool that lets you chat with a PDF using Claude.
 
