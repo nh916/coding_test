@@ -7,7 +7,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from ai.ai_pdf_reader import PDFChat
+from src.ai_pdf_reader import PDFChat
 
 
 def main() -> None:
@@ -26,8 +26,12 @@ def main() -> None:
     pdf_chat: PDFChat = PDFChat(api_key=anthropic_api_key)
 
     pdf_path: str = input("Enter the path to the PDF file: ")
-    pdf_chat.load_pdf(pdf_path=pdf_path)
+    pdf_chat.load_pdf(path=pdf_path)
 
     while True:
         user_question: str = input("Enter your question: ")
         print(pdf_chat.ask(question=user_question))
+
+
+if __name__ == "__main__":
+    main()

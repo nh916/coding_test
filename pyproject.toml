@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 python-dotenv = "^1.2.2"
+pymupdf = "^1.27.2.2"
+anthropic = "^0.96.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -24,7 +24,7 @@ class PDFChat:
     Simple PDF chat interface using Claude
     """
 
-    def __init__(self, api_key: str, model: str = "claude-3-sonnet-20240229") -> None:
+    def __init__(self, api_key: str, model: str = "claude-haiku-4-5-20251001") -> None:
         """
         Initialize the PDFChat client.
 
